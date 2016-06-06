@@ -104,7 +104,7 @@ public class RageComicListFragment extends Fragment {
             mLayoutInflater = LayoutInflater.from(context);
         }
 
-        @Override
+        @Override // TODO: What is this doing here? When is it called?
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
             return new ViewHolder(mLayoutInflater
                     .inflate(R.layout.recycler_item_rage_comic, viewGroup, false));
@@ -112,11 +112,14 @@ public class RageComicListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+            /* TODO: according to https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html
+            it's abstract, why not abstract here?
+            */
             final int imageResId = mImageResIds[position];
             final String name = mNames[position];
             final String description = mDescriptions[position];
             final String url = mUrls[position];
-            viewHolder.setData(imageResId, name);
+            viewHolder.setData(imageResId, name); // TODO: isn't setData() private?
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -144,6 +147,7 @@ public class RageComicListFragment extends Fragment {
             mNameTextView = (TextView) itemView.findViewById(R.id.name);
         }
 
+        // Sets the name and image in main activity
         private void setData(int imageResId, String name) {
             mImageView.setImageResource(imageResId);
             mNameTextView.setText(name);

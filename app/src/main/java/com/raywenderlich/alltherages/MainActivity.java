@@ -27,31 +27,33 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
-implements RageComicListFragment.OnRageComicSelected{
-  static final String tag_rageComic = "rageComicList";
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+        implements RageComicListFragment.OnRageComicSelected {
+    static final String tag_rageComic = "rageComicList"; // TODO: what does "rageComicList" refer to?
 
-    setContentView(R.layout.activity_main);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    if (savedInstanceState == null) {
-      getSupportFragmentManager()
-              .beginTransaction()
-              .add(R.id.root_layout, RageComicListFragment.newInstance(), tag_rageComic)
-              .commit();
+        setContentView(R.layout.activity_main);
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.root_layout, RageComicListFragment.newInstance(), tag_rageComic)
+                    .commit();
+        }
     }
-  }
-  @Override
-  public void onRageComicSelected(int imageResId, String name, String description, String url) {
-    final RageComicDetailsFragment detailsFragment =
-            RageComicDetailsFragment.newInstance(imageResId, name, description, url);
-    getSupportFragmentManager()
-            .beginTransaction()
-            .replace(R.id.root_layout, detailsFragment, "rageComicDetails")
-            .addToBackStack(null)
-            .commit();
-  }
+
+    @Override
+    public void onRageComicSelected(int imageResId, String name, String description, String url) {
+        final RageComicDetailsFragment detailsFragment =
+                RageComicDetailsFragment.newInstance(imageResId, name, description, url);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.root_layout, detailsFragment, "rageComicDetails")
+                .addToBackStack(null)
+                .commit();
+    }
 
 
 }
