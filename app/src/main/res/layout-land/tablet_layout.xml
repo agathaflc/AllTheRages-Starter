@@ -11,15 +11,13 @@
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
-        class="com.raywenderlich.alltherages.RageComicListFragment"
-        tools:layout="@layout/fragment_rage_comic_list"></fragment>
-    <fragment
+        class="com.raywenderlich.alltherages.RageComicListFragment"></fragment>
+    <FrameLayout
         android:id="@+id/detailFragment"
         android:layout_width="0dp"
         android:layout_weight="2"
-        android:layout_height="match_parent"
-        class="com.raywenderlich.alltherages.RageComicDetailsFragment"
-        tools:layout="@layout/fragment_rage_comic_details">
-    </fragment>
+        android:layout_height="match_parent">
+    </FrameLayout>
 
-</LinearLayout> 
+</LinearLayout>
+

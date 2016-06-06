@@ -22,24 +22,52 @@
 
 package com.raywenderlich.alltherages;
 
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements RageComicListFragment.OnRageComicSelected {
-    static final String tag_rageComic = "rageComicList"; // TODO: what does "rageComicList" refer to?
+    static final String tag_rageComicList = "rageComicList"; // TODO: what does "rageComicList" refer to?
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.tablet_layout);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.root_layout, RageComicListFragment.newInstance(), tag_rageComic)
+                    .add(R.id.listFragment, RageComicListFragment.newInstance(), tag_rageComicList)
+                    .commit();
+        }
+
+        View detailsFrame = this.findViewById(R.id.detailFragment);
+        //boolean mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
+        boolean mDualPane = true;
+        if (mDualPane)
+        {
+            //if it is a dual pane, show the first item by default
+            // Get rage face names and descriptions.
+            final Resources resources = this.getResources();
+            String mName = resources.getStringArray(R.array.names) [0];
+            String mDescription = resources.getStringArray(R.array.descriptions) [0];
+            String mUrl = resources.getStringArray(R.array.urls) [0];
+
+            // Get rage face images.
+            final TypedArray typedArray =resources.obtainTypedArray(R.array.images);
+            int mImageResId = typedArray.getResourceId(0, 0);
+            typedArray.recycle();
+            final RageComicDetailsFragment detailsFragment =
+                    RageComicDetailsFragment.newInstance(mImageResId, mName, mDescription, mUrl);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.detailFragment, detailsFragment, "rageComicDetails")
+                    .addToBackStack(null)
                     .commit();
         }
     }
@@ -50,7 +78,7 @@ public class MainActivity extends AppCompatActivity
                 RageComicDetailsFragment.newInstance(imageResId, name, description, url);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.root_layout, detailsFragment, "rageComicDetails")
+                .replace(R.id.detailFragment, detailsFragment, "rageComicDetails")
                 .addToBackStack(null)
                 .commit();
     }
